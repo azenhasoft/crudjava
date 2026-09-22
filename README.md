@@ -1,107 +1,34 @@
-# CRUD de Usuários em Java
+# CRUD de usuários em Java
 
-Projeto desenvolvido para praticar os conceitos fundamentais da linguagem Java e Programação Orientada a Objetos (POO).
+Aplicação de terminal para praticar classes, objetos, listas e entrada de dados em Java. Permite cadastrar, listar, atualizar e excluir usuários durante uma execução.
 
-## 📋 Sobre o Projeto
+## Requisitos
 
-Este projeto implementa um CRUD (Create, Read, Update e Delete) de usuários utilizando Java puro, executado via terminal.
+JDK instalado, com `javac` e `java` disponíveis no terminal.
 
-Os dados são armazenados em memória utilizando uma `ArrayList`, permitindo cadastrar, listar, atualizar e excluir usuários durante a execução do programa.
-
-## 🚀 Funcionalidades
-
-* Cadastro de usuários
-* Listagem de usuários cadastrados
-* Atualização de dados de usuários
-* Exclusão de usuários
-* Menu interativo via terminal
-
-## 🛠️ Tecnologias Utilizadas
-
-* Java
-* Programação Orientada a Objetos (POO)
-* ArrayList
-* Scanner
-
-## 📂 Estrutura do Projeto
-
-```text
-crud-java/
-│
-├── src/
-│   ├── Usuario.java
-│   └── Main.java
-│
-└── README.md
-```
-
-## 💡 Conceitos Praticados
-
-Durante o desenvolvimento deste projeto foram utilizados os seguintes conceitos:
-
-* Classes e Objetos
-* Encapsulamento
-* Construtores
-* Getters e Setters
-* Listas com ArrayList
-* Estruturas de decisão (if e switch)
-* Estruturas de repetição (for e do-while)
-* Entrada de dados com Scanner
-* Manipulação de objetos em memória
-
-## ▶️ Como Executar
-
-### 1. Clonar o repositório
+## Executar
 
 ```bash
-git clone https://github.com/azenhasoft/crud-java.git
-```
-
-### 2. Entrar na pasta do projeto
-
-```bash
-cd crud-java
-```
-
-### 3. Compilar os arquivos
-
-```bash
-javac *.java
-```
-
-### 4. Executar o programa
-
-```bash
+git clone https://github.com/azenhasoft/crudjava.git
+cd crudjava
+javac Main.java Usuario.java
 java Main
 ```
 
-## 📷 Exemplo de Uso
+Os arquivos Java ficam na raiz do repositório. Para limpar os arquivos compilados, remova os `.class` gerados localmente.
+
+## Como funciona
+
+Escolha uma opção do menu e siga as instruções. Cada usuário tem um ID inteiro, um nome e um email. O ID deve ser único; nome e email não podem ficar vazios. Se você digitar texto no lugar de um número, o programa pede novamente a entrada. As informações ficam apenas em memória e desaparecem ao encerrar o programa.
 
 ```text
-==========================
- CRUD DE USUÁRIOS EM JAVA
-==========================
 1 - Cadastrar usuário
 2 - Listar usuários
 3 - Atualizar usuário
 4 - Excluir usuário
 0 - Sair
-Escolha uma opção:
 ```
 
-## 🎯 Objetivo
+Este é um exercício de CRUD em memória. Ele não usa banco de dados, validação completa de email nem autenticação.
 
-O objetivo deste projeto é consolidar conhecimentos básicos de Java e servir como primeiro exemplo de aplicação CRUD para estudos e evolução na linguagem.
-
-Futuramente este projeto poderá receber melhorias como:
-
-* Persistência em arquivos
-* Integração com banco de dados
-* Interface gráfica
-* API REST com Spring Boot
-
-## 👨‍💻 Autor
-
-Lucas Azenha
-
-GitHub: https://github.com/azenhasoft
+Autor: [Lucas Azenha](https://github.com/azenhasoft).
