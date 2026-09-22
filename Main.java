@@ -1,162 +1,130 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
+        List<Usuario> usuarios = new ArrayList<>();
 
-        // Crio uma lista para armazenar os usuários cadastrados
-        ArrayList<Usuario> usuarios = new ArrayList<>();
+        try (Scanner scanner = new Scanner(System.in)) {
+            int opcao;
+            do {
+                mostrarMenu();
+                opcao = lerInteiro(scanner, "Escolha uma opção: ");
 
-        // Scanner para ler dados digitados pelo usuário
-        Scanner scanner = new Scanner(System.in);
+                switch (opcao) {
+                    case 1:
+                        cadastrar(scanner, usuarios);
+                        break;
+                    case 2:
+                        listar(usuarios);
+                        break;
+                    case 3:
+                        atualizar(scanner, usuarios);
+                        break;
+                    case 4:
+                        excluir(scanner, usuarios);
+                        break;
+                    case 0:
+                        System.out.println("Programa encerrado.");
+                        break;
+                    default:
+                        System.out.println("Opção inválida.");
+                }
+            } while (opcao != 0);
+        }
+    }
 
-        int opcao;
+    private static void mostrarMenu() {
+        System.out.println("\n==========================");
+        System.out.println(" CRUD DE USUÁRIOS EM JAVA ");
+        System.out.println("==========================");
+        System.out.println("1 - Cadastrar usuário");
+        System.out.println("2 - Listar usuários");
+        System.out.println("3 - Atualizar usuário");
+        System.out.println("4 - Excluir usuário");
+        System.out.println("0 - Sair");
+    }
 
-        // O menu continuará aparecendo até o usuário escolher sair
-        do {
-
-            System.out.println("\n==========================");
-            System.out.println(" CRUD DE USUÁRIOS EM JAVA ");
-            System.out.println("==========================");
-            System.out.println("1 - Cadastrar usuário");
-            System.out.println("2 - Listar usuários");
-            System.out.println("3 - Atualizar usuário");
-            System.out.println("4 - Excluir usuário");
-            System.out.println("0 - Sair");
-            System.out.print("Escolha uma opção: ");
-
-            opcao = scanner.nextInt();
-
-            // Limpa o ENTER deixado pelo nextInt()
-            scanner.nextLine();
-
-            switch (opcao) {
-
-                case 1:
-
-                    // Cadastro de usuário
-
-                    System.out.print("Informe o ID: ");
-                    int id = scanner.nextInt();
-
-                    scanner.nextLine();
-
-                    System.out.print("Informe o nome: ");
-                    String nome = scanner.nextLine();
-
-                    System.out.print("Informe o email: ");
-                    String email = scanner.nextLine();
-
-                    // Crio um novo objeto Usuario e adiciono na lista
-                    Usuario novoUsuario =
-                            new Usuario(id, nome, email);
-
-                    usuarios.add(novoUsuario);
-
-                    System.out.println("Usuário cadastrado com sucesso!");
-
-                    break;
-
-                case 2:
-
-                    // Verifico se existem usuários cadastrados
-
-                    if (usuarios.isEmpty()) {
-
-                        System.out.println("Nenhum usuário cadastrado.");
-
-                    } else {
-
-                        System.out.println("\nLista de usuários:");
-
-                        // Percorro toda a lista exibindo cada usuário
-                        for (Usuario usuario : usuarios) {
-
-                            System.out.println(usuario);
-
-                        }
-
-                    }
-
-                    break;
-
-                case 3:
-
-                    // Atualização de usuário
-
-                    System.out.print("Digite o ID do usuário: ");
-                    int idAtualizar = scanner.nextInt();
-
-                    scanner.nextLine();
-
-                    boolean encontrouUsuario = false;
-
-                    // Procuro o usuário pelo ID
-                    for (Usuario usuario : usuarios) {
-
-                        if (usuario.getId() == idAtualizar) {
-
-                            System.out.print("Novo nome: ");
-                            String novoNome =
-                                    scanner.nextLine();
-
-                            System.out.print("Novo email: ");
-                            String novoEmail =
-                                    scanner.nextLine();
-
-                            // Atualizo os dados do usuário
-                            usuario.setNome(novoNome);
-                            usuario.setEmail(novoEmail);
-
-                            System.out.println("Usuário atualizado com sucesso!");
-
-                            encontrouUsuario = true;
-
-                            break;
-                        }
-                    }
-
-                    if (!encontrouUsuario) {
-                        System.out.println("Usuário não encontrado.");
-                    }
-
-                    break;
-
-                case 4:
-
-                    // Exclusão de usuário
-
-                    System.out.print("Digite o ID do usuário: ");
-                    int idExcluir = scanner.nextInt();
-
-                    boolean removido = usuarios.removeIf(
-                            usuario -> usuario.getId() == idExcluir
-                    );
-
-                    if (removido) {
-                        System.out.println("Usuário removido com sucesso!");
-                    } else {
-                        System.out.println("Usuário não encontrado.");
-                    }
-
-                    break;
-
-                case 0:
-
-                    System.out.println("Programa encerrado.");
-
-                    break;
-
-                default:
-
-                    System.out.println("Opção inválida.");
-
+    private static int lerInteiro(Scanner scanner, String mensagem) {
+        while (true) {
+            System.out.print(mensagem);
+            String entrada = scanner.nextLine().trim();
+            try {
+                return Integer.parseInt(entrada);
+            } catch (NumberFormatException e) {
+                System.out.println("Digite um número inteiro válido.");
             }
+        }
+    }
 
-        } while (opcao != 0);
+    private static String lerTexto(Scanner scanner, String mensagem) {
+        while (true) {
+            System.out.print(mensagem);
+            String texto = scanner.nextLine().trim();
+            if (!texto.isEmpty()) {
+                return texto;
+            }
+            System.out.println("Este campo não pode ficar vazio.");
+        }
+    }
 
-        // Fecho o Scanner ao final do programa
-        scanner.close();
+    private static Usuario buscarPorId(List<Usuario> usuarios, int id) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getId() == id) {
+                return usuario;
+            }
+        }
+        return null;
+    }
+
+    private static void cadastrar(Scanner scanner, List<Usuario> usuarios) {
+        int id = lerInteiro(scanner, "Informe o ID: ");
+        if (buscarPorId(usuarios, id) != null) {
+            System.out.println("Já existe um usuário com esse ID.");
+            return;
+        }
+
+        String nome = lerTexto(scanner, "Informe o nome: ");
+        String email = lerTexto(scanner, "Informe o email: ");
+        usuarios.add(new Usuario(id, nome, email));
+        System.out.println("Usuário cadastrado com sucesso!");
+    }
+
+    private static void listar(List<Usuario> usuarios) {
+        if (usuarios.isEmpty()) {
+            System.out.println("Nenhum usuário cadastrado.");
+            return;
+        }
+
+        System.out.println("\nLista de usuários:");
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario);
+        }
+    }
+
+    private static void atualizar(Scanner scanner, List<Usuario> usuarios) {
+        int id = lerInteiro(scanner, "Digite o ID do usuário: ");
+        Usuario usuario = buscarPorId(usuarios, id);
+        if (usuario == null) {
+            System.out.println("Usuário não encontrado.");
+            return;
+        }
+
+        usuario.setNome(lerTexto(scanner, "Novo nome: "));
+        usuario.setEmail(lerTexto(scanner, "Novo email: "));
+        System.out.println("Usuário atualizado com sucesso!");
+    }
+
+    private static void excluir(Scanner scanner, List<Usuario> usuarios) {
+        int id = lerInteiro(scanner, "Digite o ID do usuário: ");
+        Usuario usuario = buscarPorId(usuarios, id);
+        if (usuario == null) {
+            System.out.println("Usuário não encontrado.");
+            return;
+        }
+
+        usuarios.remove(usuario);
+        System.out.println("Usuário removido com sucesso!");
     }
 }
